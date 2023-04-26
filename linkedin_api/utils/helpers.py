@@ -8,6 +8,8 @@ def get_id_from_urn(urn):
 
     Example: urn:li:fs_miniProfile:<id>
     """
+    if isinstance(urn, int):
+        return urn
     if urn.isdigit():
         return urn
     return urn.split(":")[3]
