@@ -3,6 +3,7 @@ import logging
 from linkedin_api.cookie_repository import CookieRepository
 from bs4 import BeautifulSoup
 import json
+from torpy.http.requests import tor_requests_session
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +53,7 @@ class Client(object):
     def __init__(
         self, *, debug=False, refresh_cookies=False, proxies={}, cookies_dir=None
     ):
-        self.session = requests.session()
+        self.session = tor_requests_session()
         self.session.proxies.update(proxies)
         self.session.headers.update(Client.REQUEST_HEADERS)
         self.proxies = proxies
@@ -69,7 +70,7 @@ class Client(object):
         """
         self.logger.debug("Requesting new cookies.")
 
-        res = requests.get(
+        res = self.session.get(
             f"{Client.LINKEDIN_BASE_URL}/uas/authenticate",
             headers=Client.AUTH_REQUEST_HEADERS,
             proxies=self.proxies,
@@ -108,7 +109,7 @@ class Client(object):
 
         Store this data in self.metadata
         """
-        res = requests.get(
+        res = self.session.get(
             f"{Client.LINKEDIN_BASE_URL}",
             cookies=self.session.cookies,
             headers=Client.AUTH_REQUEST_HEADERS,
@@ -148,7 +149,7 @@ class Client(object):
             "JSESSIONID": self.session.cookies["JSESSIONID"],
         }
 
-        res = requests.post(
+        res = self.session.post(
             f"{Client.LINKEDIN_BASE_URL}/uas/authenticate",
             data=payload,
             cookies=self.session.cookies,
