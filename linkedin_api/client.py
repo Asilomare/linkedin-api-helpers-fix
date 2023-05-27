@@ -51,7 +51,7 @@ class Client(object):
     }
 
     def __init__(
-        self, *, debug=False, refresh_cookies=False, proxies={}, cookies_dir=None, session=session
+        self, *, debug=False, refresh_cookies=False, proxies={}, cookies_dir=None, session=None
     ):
         self.session = session
         self.session.proxies.update(proxies)
