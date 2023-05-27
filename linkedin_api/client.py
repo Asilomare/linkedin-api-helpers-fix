@@ -51,9 +51,9 @@ class Client(object):
     }
 
     def __init__(
-        self, *, debug=False, refresh_cookies=False, proxies={}, cookies_dir=None
+        self, *, debug=False, refresh_cookies=False, proxies={}, cookies_dir=None, session=session
     ):
-        self.session = tor_requests_session()
+        self.session = session
         self.session.proxies.update(proxies)
         self.session.headers.update(Client.REQUEST_HEADERS)
         self.proxies = proxies
