@@ -21,7 +21,7 @@ class Client(object):
     """
 
     # Settings for general Linkedin API calls
-    LINKEDIN_BASE_URL = "https://www.linkedin.com"
+    LINKEDIN_BASE_URL = "http://www.linkedin.com"
     API_BASE_URL = f"{LINKEDIN_BASE_URL}/voyager/api"
     REQUEST_HEADERS = {
         "user-agent": " ".join(
